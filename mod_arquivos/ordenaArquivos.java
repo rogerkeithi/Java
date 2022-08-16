@@ -1,5 +1,6 @@
 package org.example;
 
+
 import java.io.*;
 import java.nio.file.Files;
 import java.util.Random;
@@ -13,6 +14,8 @@ public class Main {
 
 
     public static void main(String[] args) throws IOException {
+        criar_arquivos();
+
         for (int i = 0; i < 5; i++) {
             dirPasta(N[i]);
         }
@@ -54,14 +57,14 @@ public class Main {
                 .limit(10)
                 .forEach(path -> {
                     System.out.println(path);
-                    try {
+                    /*try {
                         ordenarVetor(lerArquivo("./"+path));
                     } catch (IOException e) {
                         throw new RuntimeException(e);
-                    }
+                    }*/
                 });
     }
-    public static String[] lerArquivo(String arqLendo) throws IOException {
+    public static int[] lerArquivo(String arqLendo) throws IOException {
         File arq = new File(arqLendo);
         String arqDir = arq.getAbsolutePath();
         BufferedReader buffRead = new BufferedReader(new FileReader(arqDir));
@@ -77,16 +80,23 @@ public class Main {
 
         String[] res = new String[N];
 
+        int[] toVet = new int[N];
+
         for(int i = 0; i < N; i++){
             res[i] = br.readLine();
+            toVet[i] = Integer.parseInt(res[i]);
         }
 
         br.close();
 
-        return res;
+        return toVet;
     }
 
-    public static String[] ordenarVetor(String[] vet){
-        
+    public static int[] ordenarVetor(int[] vet){
+        int temp;
+
+        for(int i = 0; )
+
+        return vet;
     }
 }
