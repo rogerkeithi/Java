@@ -1,6 +1,5 @@
 package org.example;
-
-
+//          ^^^     Padrão do IntelliJ
 import java.io.*;
 import java.nio.file.Files;
 import java.util.Random;
@@ -12,16 +11,16 @@ import java.util.Random;
 public class Main {
     public static int N[] = new int[]{100, 1000, 10000, 50000, 100000};
 
-
     public static void main(String[] args) throws IOException {
+        //criando arquivos...
         criar_arquivos();
 
         for (int i = 0; i < 5; i++) {
             dirPasta(N[i]);
         }
 
-
     }
+    //Este método cria os primeiros arquivos em suas respectivas pastas, com valores aleatórios;
     public static void criar_arquivos() throws IOException {
         for (int i = 0; i < 5; i++) {
             File pasta = new File(String.valueOf(N[i]));
@@ -50,6 +49,7 @@ public class Main {
             }
         }
     }
+    //Este método é usado para acessar os arquivos dentro das pastas;
     private static void dirPasta(int x) throws IOException {
         String dirName = String.valueOf(x);
 
@@ -57,13 +57,15 @@ public class Main {
                 .limit(10)
                 .forEach(path -> {
                     System.out.println(path);
-                    /*try {
-                        ordenarVetor(lerArquivo("./"+path));
+                    try {
+                        criarOrd(ordenarVetor(lerArquivo("./"+path)),"./" + path);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
-                    }*/
+                    }
                 });
+
     }
+    //Este método lê o arquivo e retorna os valores convertidos para inteiros;
     public static int[] lerArquivo(String arqLendo) throws IOException {
         File arq = new File(arqLendo);
         String arqDir = arq.getAbsolutePath();
@@ -92,11 +94,40 @@ public class Main {
         return toVet;
     }
 
+    //Após Ler o vetor, é chamado o método para ordenar o vetor, retornando o vetor com os valores na ordem crescente;
     public static int[] ordenarVetor(int[] vet){
         int temp;
 
-        for(int i = 0; )
+        for(int i = 0; i < vet.length; i++){
+            for(int j = 0; j < i; j++){
+                if(vet[i] < vet[j]){
+                    temp = vet[i];
+                    vet[i] = vet[j];
+                    vet[j] = temp;
+                }
+            }
+        }
+            return vet;
+    }
+    //Após a ordenação, este método é chamado para criar os arquivos com "_ord.txt" nos seus respectivos nomes;
+    public static void criarOrd(int[] vet, String arqEscrevendo) throws IOException {
+        int tam = arqEscrevendo.length();
 
-        return vet;
+        // removendo ".txt" do arquivo
+        arqEscrevendo = arqEscrevendo.substring(0,tam-4);
+
+        // adicionando "_ord" ao nome do arquivo
+        arqEscrevendo += "_ord.txt";
+
+        File arq = new File(arqEscrevendo);
+        String arqDir = arq.getAbsolutePath();
+
+        BufferedWriter buffWrite = new BufferedWriter(new FileWriter(arqDir, true));
+
+        for(int i = 0; i < vet.length; i++){
+            buffWrite.append(vet[i] + "\n");
+        }
+
+        buffWrite.close();
     }
 }
